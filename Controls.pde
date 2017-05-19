@@ -1,13 +1,16 @@
 class Controls {
   boolean[] keys = new boolean[3];
   
-  boolean setKey(int k, boolean value) {
+  boolean setKey(int k, int kCode, boolean value) {
     switch (k){
-    case LEFT:
-      return keys[0] = value;
-    case RIGHT:
-      return keys[1] = value;
-    case ENTER:
+    case CODED:
+      switch (kCode) {
+      case LEFT:
+        return keys[0] = value;
+      case RIGHT:
+        return keys[1] = value;
+      }
+    case ' ':
       return keys[2] = value;
     default: return value;
     }

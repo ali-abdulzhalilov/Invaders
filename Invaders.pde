@@ -23,11 +23,11 @@ void draw() {
 }
 
 void keyPressed() {
-  c.setKey(keyCode, true);
+  c.setKey(key, keyCode, true);
 }
 
 void keyReleased() {
-  c.setKey(keyCode, false);
+  c.setKey(key, keyCode, false);
 }
 
 void update() {
