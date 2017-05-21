@@ -3,7 +3,7 @@ class Player {
   float s = 10;
   float dx = 0;
   float oldTime;
-  float fireRate = 0.1;
+  float fireRate = 0.5;
   float fireTimer;
   
   Player(float w, float h) {
