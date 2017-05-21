@@ -1,5 +1,5 @@
-float bulletSize = 10;
-float bulletSpeed = 3;
+float bulletSize = 7.5;
+float bulletSpeed = 5;
 ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
 Player p;
@@ -10,7 +10,6 @@ void setup() {
   
   bullets = new ArrayList<Bullet>();
   enemies = new ArrayList<Enemy>();
-  bullets.add(new Bullet(width/2, height/2, -1));
   float dis = 30, N = 10, M = 4;
   for (int i = 0; i < N; i++) { //x
     for (int j = 0; j < M; j++) { //y
@@ -18,7 +17,7 @@ void setup() {
     }
   }
   //enemies.add(new Enemy(50, 50, 20, 20, 50, width-50-bulletSize, 50));
-  p = new Player(30, 20);
+  p = new Player(20, 15);
   c = new Controls();
 }
 
@@ -40,11 +39,16 @@ void update() {
   for (int i = bullets.size() - 1; i >= 0; i--) {
     Bullet b = bullets.get(i);
     b.move();
-    if (b.checkBorders())
+    b.hitOnBorders();
+    b.hitOnPlayerAndEnemies();
+    if (b.hit)
       bullets.remove(i);
   }
   for (int i = enemies.size() - 1; i >= 0; i--) {
-    enemies.get(i).update();
+    Enemy e = enemies.get(i);
+    if (e.hit)
+      enemies.remove(i);
+    e.update();
   }
   p.update();
 }

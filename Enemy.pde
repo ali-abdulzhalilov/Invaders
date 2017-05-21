@@ -5,6 +5,7 @@ class Enemy {
   float minx, maxx, my;
   float ox, oy;
   boolean down = false, right = true;
+  boolean hit = false;
   
   Enemy(float x, float y, float w, float h, float minx, float maxx, float my) {
     this.x = x;
