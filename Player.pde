@@ -15,8 +15,8 @@ class Player {
   }
   
   void update() {
-    if (x + w > width) x = width - w;
-    if (x < 0) x = 0;
+    if (x + w > width) x = 0;
+    if (x < 0) x = width - w;
     
     x += dx * s;
     

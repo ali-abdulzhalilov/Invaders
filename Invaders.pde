@@ -13,10 +13,9 @@ void setup() {
   float dis = 30, N = 10, M = 4;
   for (int i = 0; i < N; i++) { //x
     for (int j = 0; j < M; j++) { //y
-      enemies.add(new Enemy(50+i*dis, j*dis+20, 15, 15, 50+i*dis, width-dis*N+i*dis-50, dis/2));
+      enemies.add(new Enemy(50+i*dis, j*dis+20, 15, 15, 50+i*dis, width-dis*N+i*dis-50+15, dis/2));
     }
   }
-  //enemies.add(new Enemy(50, 50, 20, 20, 50, width-50-bulletSize, 50));
   p = new Player(20, 15);
   c = new Controls();
 }

@@ -1,6 +1,6 @@
 class Enemy {
   float x, y, w, h;
-  float s = 1.2;
+  float s = 1.5;
   float dx = 0, dy = 0;
   float minx, maxx, my;
   float ox, oy;
@@ -67,6 +67,10 @@ class Enemy {
     noStroke();
     fill(0, 125, 255);
     rect(x, y, w, h);
+    
+    stroke(0, 255, 0);
+    line(minx, y, minx, y+h);
+    line(maxx+w, y, maxx+w, y+h);
   }
 
 }
