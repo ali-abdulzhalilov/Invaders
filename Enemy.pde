@@ -6,7 +6,7 @@ class Enemy {
   float oy;
   boolean down = false, right = true;
   boolean hit = false;
-  float oldTime, fireRate = 5, fireTimer = random(fireRate);
+  float oldTime, fireRate = 20, fireTimer = random(fireRate);
   
   Enemy(float x, float y, float w, float h, float minx, float maxx, float my) {
     this.x = x;

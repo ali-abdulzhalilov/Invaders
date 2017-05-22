@@ -7,6 +7,7 @@ Controls c;
 
 void setup() {
   size(640, 480);
+  smooth();
   
   bullets = new ArrayList<Bullet>();
   enemies = new ArrayList<Enemy>();
