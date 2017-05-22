@@ -2,9 +2,8 @@ class Player {
   float x, y, w, h;
   float s = 10;
   float dx = 0;
-  float oldTime;
-  float fireRate = 0.5;
-  float fireTimer;
+  float oldTime, fireRate = 0.5, fireTimer;
+  int hitCount = 0;
   
   Player(float w, float h) {
     this.w = w;

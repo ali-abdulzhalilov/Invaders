@@ -27,8 +27,11 @@ class Bullet {
         }
       }
     } else {
-      if (checkHit(x, y, bulletSize, bulletSize, p.x, p.y, p.w, p.h))
-        println("player hit");
+      if (checkHit(x, y, bulletSize, bulletSize, p.x, p.y, p.w, p.h)) {
+        hit = true;
+        p.hitCount++;
+        println("player hit: " + p.hitCount);
+      }
     }
   }
   

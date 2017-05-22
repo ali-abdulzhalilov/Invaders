@@ -1,11 +1,12 @@
 class Enemy {
   float x, y, w, h;
-  float s = 1.5;
+  float s = 1.2;
   float dx = 0, dy = 0;
   float minx, maxx, my;
-  float ox, oy;
+  float oy;
   boolean down = false, right = true;
   boolean hit = false;
+  float oldTime, fireRate = 5, fireTimer = random(fireRate);
   
   Enemy(float x, float y, float w, float h, float minx, float maxx, float my) {
     this.x = x;
@@ -15,7 +16,6 @@ class Enemy {
     this.minx = minx;
     this.maxx = maxx;
     this.my = my;
-    this.ox = x;
     this.oy = y;
   }
   
@@ -24,31 +24,30 @@ class Enemy {
     
     x += dx * s;
     y += dy * s;
-  }
-  
-  void oxmx() {
-    ox = x;
-    oy = y;
+    
+    fireTimer -= (millis() - oldTime) / 1000 * random(1);
+    oldTime = millis();
+    shoot();
   }
   
   void whereToGo() {
     if (down) {
       if (y >= oy + my) {
         down = false;
-        oxmx();
+        oy = y;
       }
     } else {
       if (right) {
         if (x >= maxx) {
           right = false;
           down = true;
-          oxmx();
+          x = maxx;
         }
       } else {
         if (x <= minx) {
           right = true;
           down = true;
-          oxmx();
+          x = minx;
         }
       }
     }
@@ -63,14 +62,19 @@ class Enemy {
     }
   }
   
+  void shoot() {
+    if (fireTimer <= 0) {
+      float x = this.x + (this.w - bulletSize)/2;
+      float y = this.y + (this.h - bulletSize)/2;
+      bullets.add(new Bullet(x, y, 1));
+      fireTimer = fireRate;
+    }
+  }
+  
   void display() {
     noStroke();
     fill(0, 125, 255);
     rect(x, y, w, h);
-    
-    stroke(0, 255, 0);
-    line(minx, y, minx, y+h);
-    line(maxx+w, y, maxx+w, y+h);
   }
 
 }
