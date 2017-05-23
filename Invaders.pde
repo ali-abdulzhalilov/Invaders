@@ -1,5 +1,6 @@
 float bulletSize = 7.5;
 float bulletSpeed = 5;
+boolean doBulletsHitEachOther = true;
 ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
 Player p;
@@ -41,6 +42,8 @@ void update() {
     b.move();
     b.hitOnBorders();
     b.hitOnPlayerAndEnemies();
+    if (doBulletsHitEachOther)
+      b.hitOnBullets();
     if (b.hit)
       bullets.remove(i);
   }

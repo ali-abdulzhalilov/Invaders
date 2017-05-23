@@ -35,6 +35,16 @@ class Bullet {
     }
   }
   
+  void hitOnBullets() {
+    for (int i = bullets.size() - 1; i >= 0; i--) {
+      Bullet b = bullets.get(i);
+      if (checkHit(x, y, bulletSize, bulletSize, b.x, b.y, bulletSize, bulletSize) && b != this) {
+        hit = true;
+        b.hit = true;
+      }
+    }
+  }
+  
   void display() {
     noStroke();
     fill(255);
