@@ -1,6 +1,6 @@
 class Bullet extends Transform{
   Object sender;
-  PVector[] trail = new PVector[5];
+  PVector[] trail = new PVector[10];
   
   Bullet(Object sender, float x, float y, float dx, float dy) {
     super(x, y, bulletSize, bulletSize);

@@ -1,9 +1,12 @@
 class Player extends Object{
   int hitCount = 0;
+  float acc = 0;
+  float dec = 0.3;
+  float maxS = 20;
   
   Player(float w, float h) {
     super(width/2 - w/2, height - h, w, h);
-    super.s = 10;
+    super.s = 0;
     this.oldTime = millis();
     this.fireRate = 0.25;
   }
@@ -12,7 +15,11 @@ class Player extends Object{
     if (x + w > width) x = 0;
     if (x < 0) x = width - w;
     
-    super.update();
+    s += (abs(s) < maxS) ? acc * dx : 0;
+    x += s;
+    acc = 0;
+    s -= abs(s) > 0 ? (s/abs(s))*dec : 0;
+    super.fireTimeCheck();
     
     if (hit) {
       hitCount++;
@@ -37,8 +44,8 @@ class Player extends Object{
       float x = this.x + (this.w - bulletSize)/2;
       float y = this.y + (this.h - bulletSize)/2;
       bullets.add(new Bullet(this, x, y, 0, -1));
-      bullets.add(new Bullet(this, x, y, -0.1, -0.95));
-      bullets.add(new Bullet(this, x, y, 0.1, -0.95));
+      bullets.add(new Bullet(this, x, y, -0.3, -0.95));
+      bullets.add(new Bullet(this, x, y, 0.3, -0.95));
       fireTimer = fireRate;
     }
   }

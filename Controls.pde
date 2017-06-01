@@ -20,11 +20,16 @@ class Controls {
 
   void handleInput() {
     p.dx = 0;
-    if (keys[0])
+    if (keys[0]) {
       p.dx += -1;
-    if (keys[1])
+      p.acc = 1;
+    }
+    if (keys[1]) {
       p.dx += 1;
-    if (keys[2])
+      p.acc = 1;
+    }
+    if (keys[2]) {
       p.shoot();
+    }
   }
 }
