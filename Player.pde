@@ -1,5 +1,6 @@
 class Player extends Object{
   int hitCount = 0;
+  int lives = 5;
   float acc = 0;
   float dec = 0.3;
   float maxS = 20;
@@ -8,7 +9,7 @@ class Player extends Object{
     super(width/2 - w/2, height - h, w, h);
     super.s = 0;
     this.oldTime = millis();
-    this.fireRate = 0.25;
+    this.fireRate = 0.3;
   }
   
   void update() {
@@ -23,6 +24,7 @@ class Player extends Object{
     
     if (hit) {
       hitCount++;
+      if (lives > 0) lives--;
       println("player hit: " + p.hitCount);
       hit = false;
     }
@@ -37,6 +39,10 @@ class Player extends Object{
     noStroke();
     fill(255, 125, 0);
     rect(x, y, w, h);
+    
+    fill(255, 0, 0);
+    for (int i = 0; i < lives; i++)
+      rect(i*30+10, 10, 20, 20);
   }
   
   void shoot() {

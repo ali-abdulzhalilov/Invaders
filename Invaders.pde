@@ -62,7 +62,7 @@ void display() {
   float k = 0;
   if (anyHit) {
     k = constrain(df-a/4, 0, df);
-    translate(cos(a)*k,0); // brrrrrr
+    translate(cos(a)*k,cos(a-random(PI))*k); // brrrrrr
     a += PI/4;
     if (k == 0) anyHit = false;
   }

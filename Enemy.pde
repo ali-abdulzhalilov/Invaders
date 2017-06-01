@@ -6,7 +6,7 @@ class Enemy extends Object{
   
   Enemy(float x, float y, float w, float h, float minx, float maxx, float my) {
     super(x, y, w, h);
-    fireRate = 20;
+    fireRate = 10;
     super.fireTimer = random(fireRate);
     this.minx = minx;
     this.maxx = maxx;
