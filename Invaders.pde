@@ -5,6 +5,7 @@ ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
 Player p;
 Controls c;
+float a = 0;
 
 void setup() {
   size(640, 480);
@@ -39,11 +40,7 @@ void keyReleased() {
 void update() {
   for (int i = bullets.size() - 1; i >= 0; i--) {
     Bullet b = bullets.get(i);
-    b.move();
-    b.hitOnBorders();
-    b.hitOnPlayerAndEnemies();
-    if (doBulletsHitEachOther)
-      b.hitOnBullets();
+    b.update();
     if (b.hit)
       bullets.remove(i);
   }
@@ -57,6 +54,9 @@ void update() {
 }
 
 void display() {
+  //translate(sin(a)*2,0); // brrrrrr
+  //a += 2;
+  
   background(0);
   
   for (int i = bullets.size() - 1; i >= 0; i--) {

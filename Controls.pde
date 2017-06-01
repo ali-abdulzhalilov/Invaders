@@ -9,6 +9,8 @@ class Controls {
         return keys[0] = value;
       case RIGHT:
         return keys[1] = value;
+      default:
+        return false;
       }
     case ' ':
       return keys[2] = value;

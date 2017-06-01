@@ -1,18 +1,13 @@
-class Enemy {
-  float x, y, w, h;
-  float s = 1.2;
-  float dx = 0, dy = 0;
+class Enemy extends Object{
   float minx, maxx, my;
   float oy;
   boolean down = false, right = true;
   boolean hit = false;
-  float oldTime, fireRate = 20, fireTimer = random(fireRate);
   
   Enemy(float x, float y, float w, float h, float minx, float maxx, float my) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
+    super(x, y, w, h);
+    fireRate = 20;
+    super.fireTimer = random(fireRate);
     this.minx = minx;
     this.maxx = maxx;
     this.my = my;
@@ -21,12 +16,7 @@ class Enemy {
   
   void update() {
     whereToGo();
-    
-    x += dx * s;
-    y += dy * s;
-    
-    fireTimer -= (millis() - oldTime) / 1000 * random(1);
-    oldTime = millis();
+    super.update();
     shoot();
   }
   
@@ -66,7 +56,7 @@ class Enemy {
     if (fireTimer <= 0) {
       float x = this.x + (this.w - bulletSize)/2;
       float y = this.y + (this.h - bulletSize)/2;
-      bullets.add(new Bullet(x, y, 1));
+      bullets.add(new Bullet(this, x, y, 0, 1));
       fireTimer = fireRate;
     }
   }

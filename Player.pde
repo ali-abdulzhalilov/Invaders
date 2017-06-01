@@ -1,26 +1,29 @@
-class Player {
-  float x, y, w, h;
-  float s = 10;
-  float dx = 0;
-  float oldTime, fireRate = 0.5, fireTimer;
+class Player extends Object{
   int hitCount = 0;
   
   Player(float w, float h) {
-    this.w = w;
-    this.h = h;
-    this.x = width/2 - w/2;
-    this.y = height - h;
+    super(width/2 - w/2, height - h, w, h);
+    super.s = 10;
     this.oldTime = millis();
+    this.fireRate = 0.25;
   }
   
   void update() {
     if (x + w > width) x = 0;
     if (x < 0) x = width - w;
     
-    x += dx * s;
+    super.update();
     
-    fireTimer -= (millis() - oldTime) / 1000;
-    oldTime = millis();
+    if (hit) {
+      hitCount++;
+      println("player hit: " + p.hitCount);
+      hit = false;
+    }
+  }
+  
+  void move() {
+    x += dx * s;
+    y += dy * s;
   }
   
   void display() {
@@ -33,7 +36,9 @@ class Player {
     if (fireTimer <= 0) {
       float x = this.x + (this.w - bulletSize)/2;
       float y = this.y + (this.h - bulletSize)/2;
-      bullets.add(new Bullet(x, y, -1));
+      bullets.add(new Bullet(this, x, y, 0, -1));
+      bullets.add(new Bullet(this, x, y, -0.1, -0.98));
+      bullets.add(new Bullet(this, x, y, 0.1, -0.98));
       fireTimer = fireRate;
     }
   }

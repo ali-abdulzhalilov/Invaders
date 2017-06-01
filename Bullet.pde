@@ -1,24 +1,31 @@
-class Bullet {
-  float x, y;
-  float dy;
-  boolean hit = false;
+class Bullet extends Transform{
+  Object sender;
   
-  Bullet(float x, float y, float dy) {
-    this.x = x;
-    this.y = y;
+  Bullet(Object sender, float x, float y, float dx, float dy) {
+    super(x, y, bulletSize, bulletSize);
+    this.s = bulletSpeed;
+    this.dx = dx;
     this.dy = dy;
+    this.sender = sender;
   }
-
-  void move() {
-    y += dy * bulletSpeed;
+  
+  void update() {
+    super.update();
+    
+    hitOnBorders();
+    hitOnPlayerAndEnemies();
+    if (doBulletsHitEachOther)
+      hitOnBullets();
   }
   
   void hitOnBorders() {
-    if (x < -bulletSize || x > width || y < -bulletSize || y > height) hit = true;
+    if (x > width) x = -w;
+    if (x < -w) x = width;
+    if (y < -h || y > height) hit = true;
   }
   
   void hitOnPlayerAndEnemies() {
-    if (dy == -1) {
+    if (sender instanceof Player) {
       for (int i = enemies.size() - 1; i >= 0; i--) {
         Enemy e = enemies.get(i);
         if (checkHit(x, y, bulletSize, bulletSize, e.x, e.y, e.w, e.h)) {
@@ -29,8 +36,7 @@ class Bullet {
     } else {
       if (checkHit(x, y, bulletSize, bulletSize, p.x, p.y, p.w, p.h)) {
         hit = true;
-        p.hitCount++;
-        println("player hit: " + p.hitCount);
+        p.hit = true;
       }
     }
   }
@@ -38,7 +44,7 @@ class Bullet {
   void hitOnBullets() {
     for (int i = bullets.size() - 1; i >= 0; i--) {
       Bullet b = bullets.get(i);
-      if (checkHit(x, y, bulletSize, bulletSize, b.x, b.y, bulletSize, bulletSize) && b != this) {
+      if (checkHit(x, y, bulletSize, bulletSize, b.x, b.y, bulletSize, bulletSize) && b != this && sender.getClass() != b.sender.getClass()) {
         hit = true;
         b.hit = true;
       }
