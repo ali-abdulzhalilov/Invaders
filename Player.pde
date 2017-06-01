@@ -37,8 +37,8 @@ class Player extends Object{
       float x = this.x + (this.w - bulletSize)/2;
       float y = this.y + (this.h - bulletSize)/2;
       bullets.add(new Bullet(this, x, y, 0, -1));
-      bullets.add(new Bullet(this, x, y, -0.1, -0.98));
-      bullets.add(new Bullet(this, x, y, 0.1, -0.98));
+      bullets.add(new Bullet(this, x, y, -0.1, -0.95));
+      bullets.add(new Bullet(this, x, y, 0.1, -0.95));
       fireTimer = fireRate;
     }
   }

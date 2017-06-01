@@ -1,4 +1,4 @@
-float bulletSize = 7.5;
+float bulletSize = 10;
 float bulletSpeed = 5;
 boolean doBulletsHitEachOther = true;
 ArrayList<Bullet> bullets;
@@ -6,9 +6,10 @@ ArrayList<Enemy> enemies;
 Player p;
 Controls c;
 float a = 0;
+boolean anyHit = false;
 
 void setup() {
-  size(640, 480);
+  size(800, 600);
   smooth();
   
   bullets = new ArrayList<Bullet>();
@@ -46,18 +47,29 @@ void update() {
   }
   for (int i = enemies.size() - 1; i >= 0; i--) {
     Enemy e = enemies.get(i);
-    if (e.hit)
+    if (e.hit) {
       enemies.remove(i);
+      anyHit = true;
+      a = 0;
+    }
     e.update();
   }
-  p.update();
+  p.update();  
 }
 
 void display() {
-  //translate(sin(a)*2,0); // brrrrrr
-  //a += 2;
-  
-  background(0);
+  float df = 5;
+  float k = 0;
+  if (anyHit) {
+    k = constrain(df-a/4, 0, df);
+    translate(cos(a)*k,0); // brrrrrr
+    a += PI/4;
+    if (k == 0) anyHit = false;
+  }
+  if (k > df-0.5) 
+    background(random(125), random(50), random(50));
+  else
+    background(0);
   
   for (int i = bullets.size() - 1; i >= 0; i--) {
     bullets.get(i).display();
