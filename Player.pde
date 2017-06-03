@@ -1,6 +1,6 @@
 class Player extends Object{
   int hitCount = 0;
-  int lives = 5;
+  int lives = 4;
   float acc = 0;
   float dec = 0.3;
   float maxS = 20;
@@ -27,6 +27,10 @@ class Player extends Object{
       if (lives > 0) lives--;
       println("player hit: " + p.hitCount);
       hit = false;
+    }
+    
+    if (p.lives <= 0) {
+      lose();
     }
   }
   

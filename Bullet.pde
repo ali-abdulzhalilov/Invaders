@@ -16,7 +16,7 @@ class Bullet extends Transform{
   void update() {
     super.update();
     if (sender instanceof Enemy)
-      x += cos(y/s)*s; // wobble
+      x += cos(y/s)*s/2; // wobble
     
     for (int i = trail.length - 2; i >= 0; i--){
       trail[i+1].x = trail[i].x;

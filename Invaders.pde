@@ -1,6 +1,6 @@
 float bulletSize = 15;
 float bulletSpeed = 7.5;
-boolean doBulletsHitEachOther = true;
+boolean doBulletsHitEachOther = false;
 ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
@@ -56,7 +56,8 @@ void update() {
       blocks.remove(i);
     b.update();
   }
-  p.update();  
+  p.update();
+  
   if (enemies.size() == 0)
     reset();
 }
@@ -70,8 +71,8 @@ void display() {
     a += PI/4;
     if (k == 0) anyHit = false;
   }
-  if (k > df-0.5) 
-    background(random(125), random(50), random(50));
+  if (k > df-0.2)
+    background(random(200), random(20), random(20));
   else
     background(0);
   
@@ -86,9 +87,14 @@ void display() {
   }
   
   p.display();
+  
+  textSize(50);
+  textAlign(RIGHT, TOP);
+  text("WAVE "+waveCount, width-10, 10);
 }
 
 void reset() {
+  p.lives++;
   waveCount++;
   resetBlocks();
   resetEnemies();
@@ -96,14 +102,16 @@ void reset() {
 
 void resetBlocks() {
   float dis = 20;
-  int N = 4, M = 3, O = 3;
+  int N = 3, M = 3, O = 3;
   
   blocks.clear();
   for (int i = 0; i <= N; i++) {
     for (int j = 0; j < M; j++) {
       for (int k = 0; k < O; k++) {
-        Block b = new Block(50+j*dis+((width-100-M*dis)/N)*i, height-150+k*dis, dis, dis);
-        blocks.add(b);
+        if (!(k==2 && j==1)) {
+          Block b = new Block(50+j*dis+((width-100-M*dis)/N)*i, height-150+k*dis, dis, dis);
+          blocks.add(b);
+        }
       }
     }
   }
@@ -122,4 +130,10 @@ void resetEnemies() {
       enemies.add(e);
     }
   }
+}
+
+void lose() {
+  p.lives = 4;
+  waveCount = 0;
+  reset();
 }

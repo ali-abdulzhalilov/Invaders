@@ -1,5 +1,5 @@
 class Block extends Transform{
-  int health = 10;
+  int health = 3;
   
   Block(float x, float y, float w, float h) {
     super(x, y, w, h);
@@ -24,7 +24,7 @@ class Block extends Transform{
   
   void display() {
     noStroke();
-    fill((1-health/10.0)*255, 255, (1-health/10.0)*255);
+    fill((1-health/3.0)*255, 255, (1-health/3.0)*255);
     rect(x, y, w, h);
   }
 }
