@@ -18,6 +18,8 @@ class Enemy extends Object{
     whereToGo();
     super.update();
     shoot();
+    
+    if (y > height) reset();
   }
   
   void whereToGo() {
@@ -25,6 +27,7 @@ class Enemy extends Object{
       if (y >= oy + my) {
         down = false;
         oy = y;
+        s += 0.5;
       }
     } else {
       if (right) {
@@ -57,6 +60,8 @@ class Enemy extends Object{
       float x = this.x + (this.w - bulletSize)/2;
       float y = this.y + (this.h - bulletSize)/2;
       bullets.add(new Bullet(this, x, y, 0, 1));
+      bullets.add(new Bullet(this, x, y, -0.3, 0.95));
+      bullets.add(new Bullet(this, x, y, 0.3, 0.95));
       fireTimer = fireRate;
     }
   }

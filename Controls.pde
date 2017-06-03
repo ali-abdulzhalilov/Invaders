@@ -1,7 +1,8 @@
-class Controls {
-  boolean[] keys = new boolean[3];
+static class Controls {
+  static boolean[] keys = new boolean[5];
+  static Player p;
   
-  boolean setKey(int k, int kCode, boolean value) {
+  static boolean setKey(int k, int kCode, boolean value) {
     switch (k){
     case CODED:
       switch (kCode) {
@@ -18,7 +19,7 @@ class Controls {
     }
   }
 
-  void handleInput() {
+  static void handleInput() {
     p.dx = 0;
     if (keys[0]) {
       p.dx += -1;

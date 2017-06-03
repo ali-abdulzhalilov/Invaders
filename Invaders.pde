@@ -1,12 +1,13 @@
 float bulletSize = 15;
-float bulletSpeed = 5;
+float bulletSpeed = 7.5;
 boolean doBulletsHitEachOther = true;
 ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
+ArrayList<Block> blocks;
 Player p;
-Controls c;
 float a = 0;
 boolean anyHit = false;
+int waveCount = 0;
 
 void setup() {
   size(800, 600);
@@ -14,28 +15,23 @@ void setup() {
   
   bullets = new ArrayList<Bullet>();
   enemies = new ArrayList<Enemy>();
-  float dis = 35, N = 10, M = 4;
-  for (int i = 0; i < N; i++) { //x
-    for (int j = 0; j < M; j++) { //y
-      enemies.add(new Enemy(50+i*dis, j*dis+20, 20, 20, 50+i*dis, width-dis*N+i*dis-50+15, dis/2));
-    }
-  }
+  blocks = new ArrayList<Block>();
   p = new Player(30, 20);
-  c = new Controls();
+  Controls.p = p;
 }
 
 void draw() {
-  c.handleInput();
+  Controls.handleInput();
   update();
   display();
 }
 
 void keyPressed() {
-  c.setKey(key, keyCode, true);
+  Controls.setKey(key, keyCode, true);
 }
 
 void keyReleased() {
-  c.setKey(key, keyCode, false);
+  Controls.setKey(key, keyCode, false);
 }
 
 void update() {
@@ -54,7 +50,15 @@ void update() {
     }
     e.update();
   }
+  for (int i = blocks.size() - 1; i >= 0; i--) {
+    Block b = blocks.get(i);
+    if (b.health <= 0)
+      blocks.remove(i);
+    b.update();
+  }
   p.update();  
+  if (enemies.size() == 0)
+    reset();
 }
 
 void display() {
@@ -71,6 +75,9 @@ void display() {
   else
     background(0);
   
+  for (int i = blocks.size() - 1; i >= 0; i--) {
+    blocks.get(i).display();
+  }
   for (int i = bullets.size() - 1; i >= 0; i--) {
     bullets.get(i).display();
   }
@@ -79,4 +86,40 @@ void display() {
   }
   
   p.display();
+}
+
+void reset() {
+  waveCount++;
+  resetBlocks();
+  resetEnemies();
+}
+
+void resetBlocks() {
+  float dis = 20;
+  int N = 4, M = 3, O = 3;
+  
+  blocks.clear();
+  for (int i = 0; i <= N; i++) {
+    for (int j = 0; j < M; j++) {
+      for (int k = 0; k < O; k++) {
+        Block b = new Block(50+j*dis+((width-100-M*dis)/N)*i, height-150+k*dis, dis, dis);
+        blocks.add(b);
+      }
+    }
+  }
+}
+
+void resetEnemies() {
+  float dis = 35;
+  int N = 10+waveCount/2;
+  int M = 4+waveCount/4;
+  
+  enemies.clear();
+  for (int i = 0; i < N; i++) { //x
+    for (int j = 0; j < M; j++) { //y
+      Enemy e = new Enemy(50+i*dis, j*dis+20, 20, 20, 50+i*dis, width-dis*N+i*dis-50+15, dis/2);
+      e.s += waveCount/2;
+      enemies.add(e);
+    }
+  }
 }

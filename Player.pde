@@ -9,12 +9,12 @@ class Player extends Object{
     super(width/2 - w/2, height - h, w, h);
     super.s = 0;
     this.oldTime = millis();
-    this.fireRate = 0.3;
+    this.fireRate = 0.1;
   }
   
   void update() {
-    if (x + w > width) x = 0;
-    if (x < 0) x = width - w;
+    if (x > width) x = -w;
+    if (x < -w) x = width;
     
     s += (abs(s) < maxS) ? acc * dx : 0;
     x += s;
@@ -49,9 +49,10 @@ class Player extends Object{
     if (fireTimer <= 0) {
       float x = this.x + (this.w - bulletSize)/2;
       float y = this.y + (this.h - bulletSize)/2;
-      bullets.add(new Bullet(this, x, y, 0, -1));
-      bullets.add(new Bullet(this, x, y, -0.3, -0.95));
-      bullets.add(new Bullet(this, x, y, 0.3, -0.95));
+      bullets.add(new Bullet(this, x-w/2, y, -0.05, -1));
+      bullets.add(new Bullet(this, x+w/2, y, 0.05, -1));
+      //bullets.add(new Bullet(this, x, y, -0.3, -0.95));
+      //bullets.add(new Bullet(this, x, y, 0.3, -0.95));
       fireTimer = fireRate;
     }
   }
