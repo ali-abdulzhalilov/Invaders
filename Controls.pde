@@ -1,8 +1,7 @@
-static class Controls {
-  static boolean[] keys = new boolean[5];
-  static Player p;
+class Controls {
+  boolean[] keys = new boolean[5];
   
-  static boolean setKey(int k, int kCode, boolean value) {
+  boolean setKey(int k, int kCode, boolean value) {
     switch (k){
     case CODED:
       switch (kCode) {
@@ -15,11 +14,17 @@ static class Controls {
       }
     case ' ':
       return keys[2] = value;
+    case 'a':
+      return keys[0] = value;
+    case 'd':
+      return keys[1] = value;
+    case '\n':
+      return keys[3] = value;
     default: return value;
     }
   }
 
-  static void handleInput() {
+  void handleInput() {
     p.dx = 0;
     if (keys[0]) {
       p.dx += -1;
@@ -31,6 +36,9 @@ static class Controls {
     }
     if (keys[2]) {
       p.shoot();
+    }
+    if (keys[3]) {
+      doGame = true;
     }
   }
 }

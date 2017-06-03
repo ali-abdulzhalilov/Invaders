@@ -5,9 +5,13 @@ ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
 Player p;
+Controls c;
 float a = 0;
+float backDraw = 0;
 boolean anyHit = false;
 int waveCount = 0;
+int highWaveCount = 0;
+boolean doGame = false;
 
 void setup() {
   size(800, 600);
@@ -17,21 +21,25 @@ void setup() {
   enemies = new ArrayList<Enemy>();
   blocks = new ArrayList<Block>();
   p = new Player(30, 20);
-  Controls.p = p;
+  c = new Controls();
 }
 
 void draw() {
-  Controls.handleInput();
-  update();
-  display();
+  c.handleInput();
+  if (doGame) {
+    update();
+    display();
+  } else {
+    startDisplay();
+  }
 }
 
 void keyPressed() {
-  Controls.setKey(key, keyCode, true);
+  c.setKey(key, keyCode, true);
 }
 
 void keyReleased() {
-  Controls.setKey(key, keyCode, false);
+  c.setKey(key, keyCode, false);
 }
 
 void update() {
@@ -59,7 +67,7 @@ void update() {
   p.update();
   
   if (enemies.size() == 0)
-    reset();
+    nextWave();
 }
 
 void display() {
@@ -88,12 +96,27 @@ void display() {
   
   p.display();
   
-  textSize(50);
+  textSize(20);
   textAlign(RIGHT, TOP);
   text("WAVE "+waveCount, width-10, 10);
 }
 
-void reset() {
+void startDisplay() {
+  background(0);
+  fill(255);
+  
+  textSize(20);
+  textAlign(RIGHT, TOP);
+  text("HI-SCORE: "+highWaveCount, width-10, 10);
+  
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  text("INVADERS", width/2, height/2-50);
+  textSize(20);
+  text("PRESS [ENTER]", width/2, height/2+50);
+}
+
+void nextWave() {
   p.lives++;
   waveCount++;
   resetBlocks();
@@ -133,7 +156,10 @@ void resetEnemies() {
 }
 
 void lose() {
+  delay(500);
+  doGame = false;
+  highWaveCount = waveCount;
   p.lives = 4;
   waveCount = 0;
-  reset();
+  nextWave();
 }
