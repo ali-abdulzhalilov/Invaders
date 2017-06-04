@@ -20,6 +20,17 @@ class Controls {
       return keys[1] = value;
     case '\n':
       return keys[3] = value;
+    case 27:
+      if (doGame) {
+        key = 0;
+        doGame = false;
+        waveCount = 0;
+        p.lives = 4;
+        bullets.clear();
+        p.x = width/2 - p.w/2;
+        p.s = 0;
+        nextWave();
+      }
     default: return value;
     }
   }

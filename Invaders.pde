@@ -111,9 +111,17 @@ void startDisplay() {
   
   textAlign(CENTER, CENTER);
   textSize(50);
-  text("INVADERS", width/2, height/2-50);
+  text("INVADERS", width/2, height/2-20);
   textSize(20);
-  text("PRESS [ENTER]", width/2, height/2+50);
+  text("PRESS [ENTER] TO START", width/2, height/2+20);
+  
+  textSize(15);
+  textAlign(LEFT, BOTTOM);
+  text("Controls:\n"+
+       "[A] or [Left Arrow] to move left\n"+
+       "[D] or [Right Arrow] to move right\n"+
+       "[Space] to shoot\n"+
+       "[Esc] to quit", 10, height-10);
 }
 
 void nextWave() {
@@ -121,6 +129,7 @@ void nextWave() {
   waveCount++;
   resetBlocks();
   resetEnemies();
+  
 }
 
 void resetBlocks() {
@@ -149,7 +158,7 @@ void resetEnemies() {
   for (int i = 0; i < N; i++) { //x
     for (int j = 0; j < M; j++) { //y
       Enemy e = new Enemy(50+i*dis, j*dis+20, 20, 20, 50+i*dis, width-dis*N+i*dis-50+15, dis/2);
-      e.s += waveCount/2;
+      e.s += waveCount/4.0;
       enemies.add(e);
     }
   }
