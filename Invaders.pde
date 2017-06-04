@@ -14,6 +14,8 @@ int highWaveCount = 0;
 boolean doGame = false;
 
 void setup() {
+  PImage icon = loadImage("icon.png");
+  surface.setIcon(icon);
   size(800, 600);
   smooth();
   
